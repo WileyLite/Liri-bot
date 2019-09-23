@@ -1,0 +1,4 @@
+node_modules
+.DS_Store
+.env
+# //tells github not to track these files

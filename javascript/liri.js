@@ -40,6 +40,7 @@ var getMeSpotify = function(songName) {
       type: "track",
       query: songName
     },
+    // search object and its params
     function(err, data) {
       if (err) {
         console.log("Error occurred: " + err);
@@ -47,10 +48,13 @@ var getMeSpotify = function(songName) {
       }
 
       var songs = data.tracks.items;
-
+// songs and the order in which it will grab data from axios
       for (var i = 0; i < songs.length; i++) {
+        //loops through song string
         console.log(i);
-        console.log("artist(s): " + songs[i].artists.map(getArtistNames));
+        console.log("artist(s): " + songs[i].artists.map
+        //goes through each song and prints the artists name
+        (getArtistNames));
         console.log("song name: " + songs[i].name);
         console.log("preview song: " + songs[i].preview_url);
         console.log("album: " + songs[i].album.name);
@@ -61,10 +65,14 @@ var getMeSpotify = function(songName) {
 };
 
 var getMyBands = function(artist) {
-  var queryURL = "https://rest.bandsintown.com/artists/" + artist + "/events?app_id=codingbootcamp";
+  var queryURL = "https://rest.bandsintown.com/artists/" + artist 
+  //assigns the url to a variable/
+  + "/events?app_id=codingbootcamp";
 
   axios.get(queryURL).then(
+    //takes in the query listed above and returns a promise/similar to jquery
     function(response) {
+      //if axios is successful log the body from the site
       var jsonData = response.data;
 
       if (!jsonData.length) {
@@ -101,6 +109,7 @@ var getMeMovie = function(movieName) {
   }
 
   var urlHit =
+  //runs a request with axios to the omdb api with the movie searched
     "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=full&tomatoes=true&apikey=trilogy";
 
   axios.get(urlHit).then(
@@ -123,10 +132,11 @@ var getMeMovie = function(movieName) {
 // Function for running a command based on text file
 var doWhatItSays = function() {
   fs.readFile("random.txt", "utf8", function(error, data) {
+    //if there's an error reading the file we log it and return pronto
     console.log(data);
 
     var dataArr = data.split(",");
-
+//splits data into a string seperated by commas
     if (dataArr.length === 2) {
       pick(dataArr[0], dataArr[1]);
     } else if (dataArr.length === 1) {
